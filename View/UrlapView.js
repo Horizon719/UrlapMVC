@@ -3,6 +3,9 @@ import TextUrlapElem from "./TextUrlapElem.js";
 
 class UrlapView{
     #leiro={}
+    #urlapElemLista=[];
+    #osszesElemValidE = true;
+    #urlapAdat = {};
     constructor(szuloElem, leiro){
         this.szuloElem = szuloElem;
         this.#leiro = leiro;
@@ -12,6 +15,18 @@ class UrlapView{
         this.submitElem = $("#submit");
         this.submitElem.on("click", (event)=>{
             event.preventDefault();
+            this.#osszesElemValidE = true;
+            this.#urlapElemLista.forEach(elem => {
+                this.#osszesElemValidE = this.#osszesElemValidE && elem.valid;
+            });
+            if (this.#osszesElemValidE) {
+                this.#urlapElemLista.forEach(elem => {
+                    this.#urlapAdat[elem.key] = elem.value;
+                });
+                this.#esemenyLetrehozas("valid");
+            } else {
+                console.log("nem valid urlap");
+            }
         })
     }
 
@@ -19,10 +34,10 @@ class UrlapView{
         for (const key in this.#leiro) {
             switch (this.#leiro[key].tipus) {
                 case "text":
-                    new TextUrlapElem(key, this.#leiro[key], this.formElem);
+                    this.#urlapElemLista.push(new TextUrlapElem(key, this.#leiro[key], this.formElem));
                     break;
                 case "number":
-                    new NumberUrlapElem(key, this.#leiro[key], this.formElem);
+                    this.#urlapElemLista.push(new NumberUrlapElem(key, this.#leiro[key], this.formElem));
                     break;
                 default:
                     console.log("ez meg nincs meg");
@@ -33,6 +48,9 @@ class UrlapView{
         this.formElem.append(txt);
     }
     
-    
+    #esemenyLetrehozas(esemenynev){
+        const esemenyem = new CustomEvent(esemenynev, {detail: this.#urlapAdat});
+        window.dispatchEvent(esemenyem);
+    }
 
 } export default UrlapView

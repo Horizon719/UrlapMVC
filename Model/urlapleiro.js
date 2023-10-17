@@ -4,7 +4,8 @@ export const URLAPLEIRO={
         tipus: "text",
         value: "",
         placeholder: "Valaki Vagyok",
-        regex: "[A-z][a-z]{2,15}"
+        regex: "[A-Z][a-z]{2,15}",
+        validalas: "név nagybetűvel kezdődok és legalább 3 karakter",
     },
 
     szulEv: {
@@ -15,6 +16,7 @@ export const URLAPLEIRO={
         regex: {
             min: 1000,
             max: 2023,
-        }
+        },
+        validalas: "1000-2023",
     }
 }
