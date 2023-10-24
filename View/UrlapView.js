@@ -1,5 +1,7 @@
 import NumberUrlapElem from "./NumberUrlapElem.js";
 import TextUrlapElem from "./TextUrlapElem.js";
+import CheckboxUrlapElem from "./CheckboxUrlapElem.js";
+import EmailUrlapElem from "./EmailUrlapElem.js";
 
 class UrlapView{
     #leiro={}
@@ -38,6 +40,12 @@ class UrlapView{
                     break;
                 case "number":
                     this.#urlapElemLista.push(new NumberUrlapElem(key, this.#leiro[key], this.formElem));
+                    break;
+                case "checkbox":
+                    this.#urlapElemLista.push(new CheckboxUrlapElem(key, this.#leiro[key], this.formElem));
+                    break;
+                case "email":
+                    this.#urlapElemLista.push(new EmailUrlapElem(key, this.#leiro[key], this.formElem));
                     break;
                 default:
                     console.log("ez meg nincs meg");
